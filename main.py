@@ -6,7 +6,7 @@ from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from dotenv import load_dotenv
 
-#from handlers import router - в этот модуль добавить эхо-локатор работает-лежит
+from handlers import router
 from scheduler import start_scheduler
 
 logging.basicConfig(level=logging.INFO)
@@ -33,7 +33,7 @@ async def main():
     )
     dp = Dispatcher()
 
-    #dp.include_router(router) - в этот модуль добавить эхо-локатор работает-лежит
+    dp.include_router(router)
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 
