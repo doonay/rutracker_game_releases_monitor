@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from aiogram.types import URLInputFile, FSInputFile
 from sqlite3_db_crud_methods import get_unsent_torrents_dict, mark_as_sent
 from rutracker_parser import rutracker_parser
+from file_deleter import torrent_file_deleter
 
 load_dotenv()
 GROUP_ID = os.getenv('GROUP_ID')
@@ -38,7 +39,11 @@ async def send_scheduled_message(bot):
                 caption="📥 Торрент-файл для загрузки",
             )
             await mark_as_sent(game['topic_id'])
-            await asyncio.sleep(5)
+            await asyncio.sleep(2)
+
+            torrent_file_deleter(game["output_torrent_file"])
+            await asyncio.sleep(3)
+
     except Exception as e:
         print(f"Ошибка при отправке сообщения: {e}")
 
